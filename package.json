@@ -1,0 +1,14 @@
+{
+  "name": "Location-Tracking-System-Vendor-Api",
+  "packageManager": "yarn@3.6.3",
+  "dependencies": {
+    "@aws-sdk/util-dynamodb": "^3.430.0",
+    "aws-sdk": "^2.1475.0",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.125",
+    "@types/node": "^20.8.7",
+    "typescript": "^5.2.2"
+  }
+}
