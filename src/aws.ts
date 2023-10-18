@@ -212,3 +212,54 @@ export const sqsDeleteMessage = async (
 // };
 
 // execSqsDeleteMessage();
+
+// Broadcast Message
+interface BroadcastMessageWebsocketProps {
+  apiGateway: AWS.ApiGatewayManagementApi;
+  connections: any[];
+  message: string;
+  tableName: string;
+}
+
+export const broadcastMessageWebsocket = async (
+  props: BroadcastMessageWebsocketProps
+) => {
+  const { apiGateway, connections, message, tableName } = props;
+  const sendVendorsCall = connections?.map(async (connection) => {
+    const { connectionId } = connection;
+    try {
+      await apiGateway
+        .postToConnection({
+          ConnectionId: connectionId,
+          Data: message,
+        })
+        .promise();
+    } catch (e) {
+      if ((e as any).statusCode === 410) {
+        // stale connection
+        console.log(`delete stale connection: ${connectionId}`);
+        const removeConnRes = await dynamoDbRemoveConnection(
+          tableName,
+          connectionId
+        );
+        if (removeConnRes instanceof Error) {
+          return e;
+        }
+      } else {
+        return e;
+      }
+    }
+  });
+
+  try {
+    const res = await Promise.all(sendVendorsCall);
+    return res;
+  } catch (e) {
+    if (e instanceof Error) {
+      return e;
+    }
+    return new Error(
+      `broadcastMessageWebsocket error object unknown type`
+    );
+  }
+};
