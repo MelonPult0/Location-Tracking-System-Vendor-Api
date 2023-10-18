@@ -133,15 +133,15 @@ export const dynamoDbAddConnection = async (
   }
 };
 
-const execAddConnection = async () => {
-  const res = await dynamoDbAddConnection(
-    'websocket-connections',
-    '123'
-  );
-  console.log(res);
-};
+// const execAddConnection = async () => {
+//   const res = await dynamoDbAddConnection(
+//     'websocket-connections',
+//     '123'
+//   );
+//   console.log(res);
+// };
 
-execAddConnection();
+// execAddConnection();
 
 // Remove a connection
 export const dynamoDbRemoveConnection = async (
@@ -178,3 +178,37 @@ export const dynamoDbRemoveConnection = async (
 // };
 
 // execRemoveConnection();
+
+export const sqsDeleteMessage = async (
+  queueUrl: string,
+  receiptHandle: string
+) => {
+  try {
+    const params: AWS.SQS.DeleteMessageRequest = {
+      ReceiptHandle: receiptHandle,
+      QueueUrl: queueUrl,
+    };
+
+    const res = await sqs.deleteMessage(params).promise();
+    console.log('Message deleted!');
+    return res;
+  } catch (e) {
+    if (e instanceof Error) {
+      return e;
+    }
+
+    return new Error(`sqsDeleteMessage error object unknown type`);
+  }
+};
+
+// const execSqsDeleteMessage = async () => {
+//   const receiptHandle =
+//     'AQEBXOBjscrUswJ0qbmhw8+PwrYppxfiWAeUERVfnpD00FKylCVcY5MnmIikhu7Q0eAbHxREzopHXbrz8OrzkgB9Ad9fuluXrsut4ohKwyklhtWrENp9cks/FpjdUZ448WbOggWl3q6x8VvmktWU9KukWmahpIaVo4MirJB6eyfLSSM0kJIjnjWHzEpTGkZoBW69guCU8F9gsfUKQw5c4XaETiDhv4elv4yTEulhE+sxyoAHIdS/ZLI2ANk+33je1a9h3cP8lZJ9T0vv4K9COWgoSBJ/qdsJZK2KhvfNtcG3MD5NEHc0wcy17AEhmgw2nhYuWX3EEQRv0URt5Cm/uwGx2y6rTrJAgpjmMrMBg7QdqGHCG56OcHSURQoSjRyVNIwn3HvYtz+j6LoCaFE8YjT4iw==';
+//   const res = await sqsDeleteMessage(
+//     'https://sqs.us-east-1.amazonaws.com/134152526579/vendor-twitter-queue',
+//     receiptHandle
+//   );
+//   console.log(res);
+// };
+
+// execSqsDeleteMessage();

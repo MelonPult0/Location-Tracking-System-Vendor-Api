@@ -5,9 +5,11 @@
 # !.yarn/sdks
 # !.yarn/versions
 .env
+/build/*
 node_modules/*
 .gitattributes
 .edutorconfig
+.yarnrc.yml
 
 # Swap the comments on the following lines if you don't wish to use zero-installs
 # Documentation here: https://yarnpkg.com/features/zero-installs
