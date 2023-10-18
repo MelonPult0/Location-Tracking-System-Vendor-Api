@@ -169,12 +169,12 @@ export const dynamoDbRemoveConnection = async (
   }
 };
 
-const execRemoveConnection = async () => {
-  const res = await dynamoDbRemoveConnection(
-    'websocket-connections',
-    '123'
-  );
-  console.log(res);
-};
+// const execRemoveConnection = async () => {
+//   const res = await dynamoDbRemoveConnection(
+//     'websocket-connections',
+//     '123'
+//   );
+//   console.log(res);
+// };
 
-execRemoveConnection();
+// execRemoveConnection();
