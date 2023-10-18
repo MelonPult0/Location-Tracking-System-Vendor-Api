@@ -2,7 +2,7 @@ name: 'Terraform action'
 on:
   push:
     branches:
-      - 2_db_connection
+      - main
   pull_request:
 permissions:
   id-token: write # This is required for aws oidc connections (Try 4)
@@ -182,7 +182,7 @@ jobs:
       - name: Terraform Apply
         id: apply
         working-directory: ./terraform
-        if: github.ref == 'refs/heads/2_db_connection' && github.event_name == 'push'
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: terraform apply -auto-approve -input=false
         env:
           TF_VAR_image_tag: ${{ github.sha }}
