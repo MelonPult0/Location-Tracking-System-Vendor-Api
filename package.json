@@ -5,9 +5,6 @@
   "repository": "https://github.com/MelonPult0/Location-Tracking-System-Vendor-Api",
   "author": "Mingxuan Tang <tmx9903@gmail.com>",
   "license": "MIT",
-  "scripts": {
-    "start": "node \"build/aws.js\""
-  },
   "dependencies": {
     "@aws-sdk/util-dynamodb": "^3.430.0",
     "aws-sdk": "^2.1475.0",
